@@ -5,11 +5,12 @@ import bcrypt from "bcrypt";
 import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local";
+import env from "dotenv"
 
 const app = express();
 const port = 3000;
 const saltRounds = 10;
-
+env.config();
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -18,7 +19,7 @@ app.use(
   session({
     // The key word used to access the session
     //DO NOT PUT THIS KEY IN YOUR REPO AND UPLOAD IT TO GITHUB THIS IS JUST AN EXAMPLE
-    secret: "TOPSECRET",
+    secret: process.env.SESSION_SECRET,
     // The session will expire after 30 minutes, if set to True you can save the session to database that way you can access it even if the server was updated or shut down
     resave: false,
     saveUninitialized: true,
@@ -34,11 +35,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 const db = new pg.Client({
-  user: "postgres",
-  host: "localhost",
-  database: "secrets",
-  password: "5566gghhyy",
-  port: 5432,
+  user: process.env.PG_USER,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DB,
+  password: process.env.PG_PASSWORD,
+  port: process.env.PG_PORT,
 });
 db.connect();
 
