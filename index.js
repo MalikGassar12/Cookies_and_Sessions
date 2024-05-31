@@ -17,6 +17,7 @@ app.use(express.static("public"));
 app.use(
   session({
     // The key word used to access the session
+    //DO NOT PUT THIS KEY IN YOUR REPO AND UPLOAD IT TO GITHUB THIS IS JUST AN EXAMPLE
     secret: "TOPSECRET",
     // The session will expire after 30 minutes, if set to True you can save the session to database that way you can access it even if the server was updated or shut down
     resave: false,
